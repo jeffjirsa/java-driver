@@ -18,6 +18,8 @@ CHANGELOG
   (JAVA-655)
 - [bug] Empty TokenRange returned in a one token cluster (JAVA-684)
 - [improvement] Expose TokenRange#contains (JAVA-687)
+- [improvement] Improve connection pool resizing algorithm (JAVA-419)
+- [bug] Fix race condition between pool expansion and shutdown (JAVA-599)
 
 Merged from 2.0.9_fixes branch:
 
