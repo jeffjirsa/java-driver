@@ -16,7 +16,7 @@
 package com.datastax.driver.core;
 
 /**
- * Interface for object that are interested in tracking the latencies
+ * Interface for objects that are interested in tracking the latencies
  * of the driver queries to each Cassandra nodes.
  * <p>
  * An implementation of this interface can be registered against a Cluster
@@ -31,15 +31,21 @@ public interface LatencyTracker {
      * the duration of that operation.
      * <p>
      * Note that there is no guarantee that this method won't be called
-     * concurrently by multiple thread, so implementations should synchronize
+     * concurrently by multiple threads, so implementations should synchronize
      * internally if need be.
      *
-     * @param host the Cassandra host on which a request has been performed.
-     * @param newLatencyNanos the latency in nanoseconds of the operation. This
-     * latency corresponds to the time elapsed between when the query was send
-     * to {@code host} and when the response was received by the driver (or the
-     * operation timed out, in which {@code newLatencyNanos} will approximately
-     * be the timeout value).
+     * @param host The Cassandra host on which a request has been performed.
+     *             This parameter is never {@code null}.
+     * @param statement The {@link com.datastax.driver.core.Statement} that has been executed.
+     *                  Can be {@code null} if the executed query did not have an associated statement object.
+     * @param exception An {@link Exception} thrown when receiving the response, or {@code null}
+     *                  if the response was successful.
+     * @param newLatencyNanos the latency in nanoseconds of the operation.
+     *                        This latency corresponds to the time elapsed between
+     *                        when the query was sent to {@code host} and
+     *                        when the response was received by the driver
+     *                        (or the operation timed out, in which {@code newLatencyNanos}
+     *                        will approximately be the timeout value).
      */
-    public void update(Host host, long newLatencyNanos);
+    public void update(Host host, Statement statement, Exception exception, long newLatencyNanos);
 }
